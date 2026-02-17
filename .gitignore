@@ -1,0 +1,28 @@
+# Virtual environment
+venv/
+
+# PyInstaller build artifacts
+build/
+dist/
+*.spec
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Generated output
+*.png
+!images/*.png
+
+# Settings exports (user-specific)
+*.json
+!venv_requirements.txt
+!.markdownlint.json
+
+# Scratch / temporary files
+prompts/temp.md
+
+# IDE
+.vscode/
+.idea/

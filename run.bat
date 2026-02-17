@@ -1,0 +1,2 @@
+cls
+dist\main.exe
