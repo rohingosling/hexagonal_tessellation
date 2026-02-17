@@ -232,7 +232,7 @@ The tessellation is rendered at the enlarged resolution (*W'* x *H'*), then down
 
 The Lanczos resampling kernel is:
 
-$$L(x) = \begin{cases} \operatorname{sinc}(x) \cdot \operatorname{sinc}(x/a) & \text{if } -a < x < a \\\\ 0 & \text{otherwise} \end{cases}$$
+$$L(x) = \begin{cases} \text{sinc}(x) \cdot \text{sinc}(x/a) & \text{if } -a < x < a \\\\ 0 & \text{otherwise} \end{cases}$$
 
 where sinc(*x*) = sin(*pi* *x*) / (*pi* *x*) and *a* is the window size (typically 3 for Lanczos-3 as used by Pillow).
 
