@@ -70,31 +70,34 @@ class TestArchitecture(unittest.TestCase):
             )
 
     def test_classes_have_docstrings(self):
-        """NFR: Every required class must have a docstring."""
+        """NFR: Every required class must have block comment documentation."""
         required = [
             "HexagonGeometry", "AxialGrid", "ColorParser",
             "TessellationRenderer", "SettingsManager", "Application",
         ]
+        source = inspect.getsource(self.mod).replace('\r\n', '\n')
         for name in required:
-            cls = getattr(self.mod, name)
-            self.assertTrue(
-                cls.__doc__ and cls.__doc__.strip(),
-                f"Class {name} is missing a docstring"
+            self.assertIn(
+                f"# {name}\n#\n# Description:",
+                source,
+                f"Class {name} is missing block comment documentation"
             )
 
     def test_public_methods_have_docstrings(self):
-        """NFR: Public methods on required classes must have docstrings."""
+        """NFR: Public methods on required classes must have block comment documentation."""
         required = [
             "HexagonGeometry", "AxialGrid", "ColorParser",
             "TessellationRenderer", "SettingsManager", "Application",
         ]
+        source = inspect.getsource(self.mod).replace('\r\n', '\n')
         for class_name in required:
             cls = getattr(self.mod, class_name)
             for method_name, method in inspect.getmembers(cls, predicate=inspect.isfunction):
                 if not method_name.startswith("_"):
-                    self.assertTrue(
-                        method.__doc__ and method.__doc__.strip(),
-                        f"{class_name}.{method_name}() is missing a docstring"
+                    self.assertIn(
+                        f"# Function: {method_name}",
+                        source,
+                        f"{class_name}.{method_name}() is missing block comment documentation"
                     )
 
     def test_public_methods_have_type_annotations(self):

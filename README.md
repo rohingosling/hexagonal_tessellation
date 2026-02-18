@@ -32,7 +32,7 @@ I'l show both approaches below. You can use either approach, which ever feels mo
 
    ![Default](images/worked-example-1.png)
 
-2. Use your preferred image manipulation program to manually remove the corner hexagons.
+2. Use your preferred image manipulation program to manually remove unneeded hexagons.
 
    ![Default](images/worked-example-2.png)&emsp;![Default](images/worked-example-3.png)
 
@@ -70,7 +70,7 @@ I'l show both approaches below. You can use either approach, which ever feels mo
 
    ![Default](images/worked-example-1.png)
 
-3. As in the case of the previous worked example, use your preferred image manipulation program to manually remove the corner hexagons.
+3. As in the case of the previous worked example, use your preferred image manipulation program to manually remove unneeded hexagons.
 
 ## Quick Start
 
