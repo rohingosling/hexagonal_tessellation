@@ -14,16 +14,16 @@ I created `hextessellator.exe` to generate transparency masks that I use for gra
 
 ## Quick Start
 
-Download `hextessellator.exe` from `dist/` and run:
+Download `hextessellator.exe` and run from the Windows Command Prompt:
 
-```bash
-# Generate with default image (1024x768, high anti-aliasing)
+```cmd
+REM Generate with default image (1024x768, high anti-aliasing)
 hextessellator.exe
 
-# Custom render
+REM Custom render
 hextessellator.exe --width 1920 --height 1080 --circumradius 48 --antialias high --debug
 
-# Save/load settings
+REM Save/load settings
 hextessellator.exe --export_settings my_config.json
 hextessellator.exe --import_settings my_config.json
 ```
