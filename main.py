@@ -474,7 +474,7 @@ class Application:
     VERSION:      str = _changelog_version("3.1.0")
     BUILD_DATE:   str = "2026-02-18"
     TITLE:        str = "HEX Grid Tessellator"
-    AUTHOR:       str = "Rohin Gosling + Claude Code"
+    AUTHOR:       str = "Rohin Gosling"
     BANNER_WIDTH: int = 60    
 
     def run(self) -> None:
