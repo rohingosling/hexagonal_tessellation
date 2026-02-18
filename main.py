@@ -635,6 +635,13 @@ class Application:
                 file.write(banner + "\n\n")
                 super().print_help(file)
 
+            def error(self, message):
+                import sys as _sys
+                _sys.stderr.write("\n")
+                self.print_usage(_sys.stderr)
+                _sys.stderr.write(f"\n{self.prog}: error: {message}\n")
+                _sys.exit(2)
+
         parser = _BannerParser(
             description="HEX Grid Tessellator — generate hexagonal grid tessellation images.",
         )
