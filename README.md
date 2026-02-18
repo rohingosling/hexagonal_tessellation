@@ -92,7 +92,7 @@ hextessellator.exe --import_settings my_config.json
 
 ![Default](images/example-1.png) ![Dense](images/example-2.png) ![Culling](images/example-3.png) ![Contrast](images/example-4.png)
 
-![Default](images/example-1.png) ![Dense](images/example-2.png) ![Culling](images/example-3.png) ![Contrast](images/example-4.png)
+![Default](images/example-5.png) ![Dense](images/example-6.png) ![Culling](images/example-7.png) ![Contrast](images/example-8.png)
 
 
 ## CLI Reference
@@ -122,12 +122,12 @@ Colours accept CSS named colours (`red`, `steelblue`), hex codes (`#FF0000`, `#F
 All application code resides in a single file (`main.py`) with six classes:
 
 ```
-Application          CLI parsing, orchestration, banner, debug output
-  +-- SettingsManager    JSON import/export with CLI-precedence merging
-  +-- ColorParser        CSS names, hex codes, RGB tuples -> (R,G,B)
-  +-- TessellationRenderer
-        +-- AxialGrid        Coordinate system, ring traversal, auto-fill
-        +-- HexagonGeometry  Vertex computation for flat-top hexagons
+Application              ...CLI parsing, orchestration, banner, debug output.
+├─ SettingsManager       ...JSON import/export with CLI-precedence merging.
+├─ ColorParser           ...CSS names, hex codes, RGB tuples -> (R,G,B).
+└─ TessellationRenderer
+   ├─ AxialGrid          ...Coordinate system, ring traversal, auto-fill.
+   └─ HexagonGeometry    ...Vertex computation for flat-top hexagons.
 ```
 
 ---

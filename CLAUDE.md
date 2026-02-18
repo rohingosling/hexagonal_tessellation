@@ -8,7 +8,7 @@ HEX Grid Tessellator v3 — a single-file Python CLI tool that generates publica
 
 ## Status
 
-Fully implemented. All 71 tests in `test_main.py` pass (including 4 executable smoke tests). Standalone `.exe` builds successfully via PyInstaller. Full requirements are in `prompts/prompt-requirements-hex-grid-tessellator.md`.
+Fully implemented. All 71 tests in `test_main.py` pass (including 4 executable smoke tests). Standalone `.exe` builds successfully via PyInstaller. Full requirements are in `docs/requirements.md`.
 
 ## Dependencies
 
@@ -97,9 +97,9 @@ Single-file OOP design with six classes:
 - **CLI precedence detection**: Parses args twice (once normally, once with `SUPPRESS` defaults) to distinguish explicit CLI args from defaults when merging with JSON settings
 - **Auto-fill layers**: When `--layers 0`, computes minimum layers to cover canvas with +1 buffer
 
-## Prompts Directory
+## Docs Directory
 
-The `prompts/` directory contains scratch markdown files used for prompt engineering and task descriptions. These are working notes — do not read or modify them unless explicitly asked.
+The `docs/` directory contains project documentation, including the full requirements specification (`docs/requirements.md`).
 
 ## Ring Traversal
 

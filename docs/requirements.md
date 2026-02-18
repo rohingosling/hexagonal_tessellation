@@ -15,22 +15,23 @@ Build a command-line tool called **HEX Grid Tessellator** that:
 3. Supports **supersampled anti-aliasing** via oversampling and Lanczos downsampling.
 4. Provides a full CLI parameter interface with **JSON-based settings import/export**.
 
-The sole external dependency is **Pillow**. The standard library modules `argparse`, `json`, `math`, `os`, and `sys` may also be used.
+The sole external dependency is **Pillow** (`Image`, `ImageColor`, `ImageDraw`). The standard library modules `argparse`, `json`, `math`, `os`, `re`, `sys`, and `typing` (`Dict`, `List`, `Optional`, `Tuple`) may also be used.
 
 ---
 
 ## Architectural Requirements
 
-The program must use an **object-oriented design**. At minimum, define the following classes (or a comparable decomposition that achieves equivalent separation of concerns):
+The program must use an **object-oriented design**. At minimum, define the following classes and helper function (or a comparable decomposition that achieves equivalent separation of concerns):
 
-| Class | Responsibility |
+| Component | Responsibility |
 |---|---|
 | `HexagonGeometry` | Vertex computation for flat-top regular hexagons. Encapsulates circumradius and vertex generation. |
 | `AxialGrid` | Axial coordinate system operations: coordinate-to-pixel conversion, ring generation, concentric grid generation, and auto-fill layer computation. |
 | `ColorParser` | Parsing of color specifications from multiple string formats into RGB tuples. |
 | `TessellationRenderer` | Orchestrates the rendering pipeline: canvas creation, two-pass concentric stroke drawing, viewport culling, and anti-alias downsampling. |
 | `SettingsManager` | JSON import/export of parameter sets, with CLI-precedence logic. |
-| `Application` | Top-level entry point: CLI argument parsing, orchestration of settings loading, rendering, file output, and debug reporting. |
+| `_changelog_version()` | Module-level helper that reads the highest `## [X.Y.Z]` heading from `CHANGELOG.md` (next to the script) and returns the version string. Falls back to a hardcoded default when the file is missing or contains no versioned headings (e.g., in a frozen `.exe`). |
+| `Application` | Top-level entry point: CLI argument parsing, orchestration of settings loading, rendering, file output, banner display, and debug reporting. |
 
 Each class must have clear **public interfaces**, **private implementation details**, and **comprehensive docstrings** with parameter/return documentation.
 
@@ -180,6 +181,8 @@ The following parameter keys are persisted:
 
 Serialize current parameters to a JSON file. Boolean flags (`cull`, `debug`) are stored as JSON booleans; all others in their natural CLI representation.
 
+If the user-specified export filename lacks a `.json` extension, append one automatically.
+
 #### FR-10.3: Import
 
 Load a JSON file and apply its values as a **base layer**:
@@ -188,22 +191,47 @@ Load a JSON file and apply its values as a **base layer**:
 - CLI parameters **explicitly provided** by the user take **precedence** over JSON values.
 - Missing keys in the JSON retain their default values.
 
+If the user-specified import filename lacks a `.json` extension, append one automatically.
+
 To detect which CLI parameters were explicitly provided, parse arguments twice: once normally, once with all defaults set to `argparse.SUPPRESS`. The second parse yields only explicitly-provided keys.
 
 ### FR-11: File Output
 
 - Output format: **PNG**.
 - If the user-specified filename lacks a `.png` extension, append one automatically.
-- After saving, read back the file size from disk for debug reporting.
+- After saving, read back the file size from disk for reporting.
 
-### FR-12: Debug Output
+### FR-12: Banner Display
 
-When debug mode is enabled, print to the terminal:
+The program must **always** display an application banner on stdout, regardless of debug mode. The banner is a box-drawing character frame containing:
 
-- A formatted **banner** with the program title, version, and author.
-- A listing of all resolved parameters (including computed layer count vs. requested).
-- Color values shown as both the original string and the resolved $(R, G, B)$ tuple.
-- Statistics: file size (human-readable: B / KB / MB), centre pixel coordinates, polygon count.
+- **Program**: The application title (`HEX Grid Tessellator`).
+- **Version**: Read dynamically from `CHANGELOG.md` via `_changelog_version()`, with a hardcoded fallback.
+- **Build Date**: A stamped date string (updated at build time).
+- **Author**: The author name.
+
+The banner box uses Unicode box-drawing characters (`┌`, `─`, `┐`, `│`, `└`, `┘`) and has a configurable width controlled by a `BANNER_WIDTH` class attribute (default: `60`).
+
+Immediately after the banner, always print a save confirmation line showing the output filename and human-readable file size (e.g., `Saved: tessellation.png (45.67 KB)`). If `--export_settings` was used, also print a save confirmation for the JSON file.
+
+The banner must also be displayed above the usage text when `--help` is invoked. Implement this via a custom `ArgumentParser` subclass that overrides `print_help()` to prepend the banner, and overrides `error()` to print a blank line, then usage, then the error message.
+
+### FR-13: Debug Output
+
+When debug mode is enabled (`--debug`), print additional detail to stdout after the banner and save confirmation:
+
+- A listing of all resolved parameters (image size, circumradius, margin, line width, layers, antialias level, cull flag).
+- When layers were auto-computed, show the resolved count with a note like `(auto-computed from requested 0)`.
+- Color values shown as both the original string and the resolved $(R, G, B)$ tuple (fill, line, background).
+- Centre pixel coordinates.
+- Polygon count drawn.
+- Repeated save confirmation lines for the PNG and optional JSON export.
+
+File sizes are formatted as human-readable strings: bytes (`B`), kilobytes (`KB` with 2 decimal places), or megabytes (`MB` with 2 decimal places).
+
+### FR-14: Antialias Level Validation
+
+Before rendering, validate that the `--antialias` value is one of the accepted levels (`off`, `low`, `medium`, `high`). If invalid, print a descriptive error message listing the valid options to `stderr` and exit with a non-zero code.
 
 ---
 
@@ -224,41 +252,57 @@ Define the following command-line arguments via `argparse`:
 | `--color_background` | `str` | `darkgrey` | Background colour. |
 | `--antialias` | `str` | `high` | Anti-alias level: `off`, `low`, `medium`, `high`. |
 | `--file` | `str` | `tessellation.png` | Output PNG filename. |
-| `--cull` | flag | `false` | Enable viewport culling. Accepts as a bare flag or with `true`/`false`. |
-| `--debug` | flag | `false` | Enable debug output. Accepts as a bare flag or with `true`/`false`. |
+| `--cull` | flag | `false` | Enable viewport culling. |
+| `--debug` | flag | `false` | Enable debug output. |
 | `--export_settings` | `str` | `None` | Export parameters to a JSON file before rendering. |
 | `--import_settings` | `str` | `None` | Import parameters from a JSON file. |
+
+### Boolean Flag Parsing
+
+The `--cull` and `--debug` flags use `nargs="?"` with `const=True` so they can be used in three ways:
+
+1. **Bare flag**: `--cull` → `True`
+2. **With explicit value**: `--cull true`, `--cull false`
+3. **Omitted**: defaults to `False`
+
+The accepted truthy values are `true`, `1`, `yes` (case-insensitive). The accepted falsy values are `false`, `0`, `no` (case-insensitive). Any other value raises an `ArgumentTypeError`.
 
 ---
 
 ## Non-Functional Requirements
 
-- **Single-file**: The entire program resides in one Python file.
-- **Type annotations**: All function signatures and class methods must include type hints.
+- **Single-file**: The entire program resides in one Python file (`main.py`).
+- **Type annotations**: All function signatures and class methods must include type hints, using `typing` imports (`Dict`, `List`, `Optional`, `Tuple`).
 - **Docstrings**: All classes and public methods must include docstrings with parameter and return documentation.
-- **Error handling**: Graceful handling of invalid colour strings, missing/malformed JSON files, and filesystem errors. Print descriptive error messages to `stderr` and exit with a non-zero code.
+- **Error handling**: Graceful handling of invalid colour strings, invalid antialias levels, missing/malformed JSON files, and filesystem errors. Print descriptive error messages to `stderr` and exit with a non-zero code.
 - **No unused dependencies**: Only Pillow and the Python standard library.
+- **UTF-8 stdout**: The `main()` entry point must reconfigure `sys.stdout` to UTF-8 encoding (with `errors="replace"`) before running the application, to ensure Unicode box-drawing characters render correctly on Windows consoles that default to cp1252.
 - **Virtual environment**: The project must use a Python virtual environment for dependency isolation. Provide standardized batch scripts (`venv_create.bat`, `venv_activate.bat`, `venv_deactivate.bat`, `venv_delete.bat`, `venv_install_requirements.bat`, `venv_save_requirements.bat`) and a `venv_requirements.txt` listing all dependencies (Pillow, PyInstaller).
-- **Executable build**: The program must be compiled to a standalone `.exe` using **PyInstaller** (`pyinstaller --onefile main.py`). The resulting executable must run without requiring a Python installation on the target machine.
-- **Validation**: The implementation must pass all automated tests in `test_main.py`. Run `python -m pytest test_main.py -v` to validate. The test suite covers architecture (required classes, docstrings, type annotations), hexagon geometry, axial grid and ring generation, color parsing, settings import/export, CLI interface, image output, viewport culling, two-pass rendering, and error handling.
+- **Executable build**: The program must be compiled to a standalone `.exe` using **PyInstaller** (`pyinstaller --onefile main.py`). The resulting executable (`dist/hextessellator.exe`) must run without requiring a Python installation on the target machine.
+- **Validation**: The implementation must pass all 71 automated tests in `test_main.py` (including 4 executable smoke tests). Run `python -m pytest test_main.py -v` to validate. The test suite covers: architecture (required classes, docstrings, type annotations, single-file assertion), hexagon geometry (vertex count, positions, distances, angles, width, height), axial grid and ring generation (origin mapping, ring traversal, cell counts, hex distances, auto-fill), color parsing (CSS names, hex codes, RGB tuples, error cases, return types), settings import/export (JSON validity, required keys, boolean serialisation, `.json` auto-append, import/override, missing file handling), CLI defaults and flags (output filename, `.png` auto-append, debug flag, invalid antialias), image output (PNG validity, dimensions, background colour, fill colour, anti-alias levels, file size), viewport culling, effective spacing radius, two-pass stroke rendering (outline visibility, no-outline when `line_width=0`), error handling (invalid colour, malformed JSON, stderr output), settings round-trip, and standalone executable smoke tests (PNG output, `.json` auto-append, debug flag).
 
 ---
 
 ## Execution Pipeline
 
-The `main()` entry point (or `Application.run()`) must execute the following steps in order:
+The `main()` function must reconfigure stdout to UTF-8, then instantiate `Application` and call `run()`. The `Application.run()` method executes the following steps in order:
 
 1. Parse CLI arguments and detect explicitly-provided keys.
-2. If `--import_settings` is specified, load JSON and apply as the base layer (CLI-explicit values take precedence).
-3. If `--export_settings` is specified, write current parameters to JSON.
-4. Parse all colour strings into RGB tuples.
+2. If `--import_settings` is specified, auto-append `.json` if missing, load JSON, and apply as the base layer (CLI-explicit values take precedence). Exit with non-zero code on `FileNotFoundError` or `JSONDecodeError`.
+3. If `--export_settings` is specified, auto-append `.json` if missing, and write current parameters to JSON. Exit with non-zero code on `IOError`.
+4. Parse all colour strings into RGB tuples. Exit with non-zero code on `ValueError`.
 5. Auto-compute layers if `layers == 0`.
-6. Scale all geometry by the anti-alias multiplier $k$.
-7. Create the oversampled canvas, filled with the background colour.
-8. Generate all axial cell coordinates for the computed layer count.
-9. Convert axial coordinates to pixel centres on the oversampled canvas.
-10. Apply viewport culling (if enabled).
-11. Execute the two-pass concentric stroke rendering.
-12. Downsample to target resolution via Lanczos (if $k > 1$).
-13. Save to PNG.
-14. Print the banner and, if debug mode is enabled, the parameter summary and statistics.
+6. Validate the antialias level. Exit with non-zero code if invalid.
+7. Render the tessellation (steps 7a–7f are internal to `TessellationRenderer.render()`):
+   - 7a. Scale all geometry by the anti-alias multiplier $k$.
+   - 7b. Compute $R_s$ and auto-fill layers if needed.
+   - 7c. Generate all axial cell coordinates and convert to pixel centres.
+   - 7d. Apply viewport culling (if enabled).
+   - 7e. Create the oversampled canvas, filled with the background colour.
+   - 7f. Execute the two-pass concentric stroke rendering.
+   - 7g. Downsample to target resolution via Lanczos (if $k > 1$).
+8. Ensure `.png` extension on the output filename, then save the image.
+9. **Always** print the banner (program title, version, build date, author in a box-drawing frame).
+10. **Always** print save confirmation(s) (output PNG, and JSON export if applicable).
+11. If debug mode is enabled, print the detailed parameter summary and statistics.
+12. Print a trailing blank line.
