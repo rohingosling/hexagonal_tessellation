@@ -1,19 +1,15 @@
-# Prompt — HEX Grid Tessellator
-
-## Role
-
-You are an expert Python software engineer. Write a single-file Python CLI program that generates publication-quality hexagonal grid tessellation images. The program must be implemented using **well-structured object-oriented architecture** and **formal software engineering principles** (encapsulation, separation of concerns, single responsibility, clear interfaces, comprehensive docstrings, and type annotations throughout).
-
----
+# Requirements — HEX Grid Tessellator
 
 ## Program Overview
 
-Build a command-line tool called **HEX Grid Tessellator** that:
+**HEX Grid Tessellator** is a single-file Python CLI program that generates publication-quality hexagonal grid tessellation images. The program is implemented using **well-structured object-oriented architecture** and **formal software engineering principles** (encapsulation, separation of concerns, single responsibility, clear interfaces, comprehensive docstrings, and type annotations throughout).
 
-1. Constructs concentric-layer hexagonal grids using the **axial coordinate system** (derived from cube coordinates).
-2. Renders the grid into a PNG image using the **Pillow** library.
-3. Supports **supersampled anti-aliasing** via oversampling and Lanczos downsampling.
-4. Provides a full CLI parameter interface with **JSON-based settings import/export**.
+The program shall:
+
+1. Construct concentric-layer hexagonal grids using the **axial coordinate system** (derived from cube coordinates).
+2. Render the grid into a PNG image using the **Pillow** library.
+3. Support **supersampled anti-aliasing** via oversampling and Lanczos downsampling.
+4. Provide a full CLI parameter interface with **JSON-based settings import/export**.
 
 The sole external dependency is **Pillow** (`Image`, `ImageColor`, `ImageDraw`). The standard library modules `argparse`, `json`, `math`, `os`, `re`, `sys`, and `typing` (`Dict`, `List`, `Optional`, `Tuple`) may also be used.
 

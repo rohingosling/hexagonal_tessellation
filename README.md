@@ -6,7 +6,9 @@
 ![Tests](https://img.shields.io/badge/tests-71%20passed-brightgreen)
 ![Version](https://img.shields.io/badge/version-3.1.0-orange)
 
-A CLI tool that generates publication-quality hexagonal grid tessellation PNG images. Uses flat-top hexagons on an axial coordinate system with supersampled anti-aliasing. Runs as a standalone Windows `.exe` - no Python installation required.
+A CLI tool that generates publication-quality hexagonal grid tessellation PNG images. Uses flat-top hexagons on an axial coordinate system with supersampled anti-aliasing.
+
+Runs as a standalone Windows `.exe` - no Python installation required.
 
 I created `hextessellator.exe` to generate transparency masks that I use for graphic design projects, like the one below.
 
@@ -20,28 +22,28 @@ As a worked example, the mask above can be created with `hextessellator.exe` usi
 
 I'l show both approaches below. You can use either approach, which ever feels more comfortable.
 
-**Command Line Arguments Workflow**
+## Command Line Arguments Workflow
 
 1. Execute the following command in Windows **CMD** or **PowerShell**:
 
    `hextessellator --width 1600 --height 1000 --circumradius 144 --margin 48 --line_width 0 --color_fill white --color_background black --antialias high --cull`
-   
+
    This will generate an image with the default file name, `tessellation.png`.<br>You can use the `--file` argument to set your own file name.
-   
+
    ![Default](images/worked-example-1.png)
 
 2. Use your preferred image manipulation program to manually remove the corner hexagons.
 
    ![Default](images/worked-example-2.png)&emsp;![Default](images/worked-example-3.png)
 
-
-**JSON Settings File Workflow**
+## JSON Settings File Workflow
 
 1. Write a JSON settings file, and place it in the same folder as `hextessellator.exe`.
 
    ***Note:**<br>Not all the properties in the JSON file below will be used for this example, but I put all the fields in there for the sake of convenience anyway, so you can use the file as a general template.*
 
    `settings-example.json`
+
    ```json
    {
      "width":            1600,
@@ -69,8 +71,6 @@ I'l show both approaches below. You can use either approach, which ever feels mo
    ![Default](images/worked-example-1.png)
 
 3. As in the case of the previous worked example, use your preferred image manipulation program to manually remove the corner hexagons.
-
-   ![Default](images/worked-example-2.png)&emsp;![Default](images/worked-example-3.png)
 
 ## Quick Start
 

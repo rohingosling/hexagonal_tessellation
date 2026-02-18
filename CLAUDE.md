@@ -107,7 +107,7 @@ Rings enumerate from axial `(-d, 0)` walking `d` steps along each of 6 direction
 
 ## TODO
 
-- [x] **Publish to GitHub as a standalone repo** — Published to https://github.com/rohingosling/hexagonal_tessellation on 2026-02-18. Added MIT LICENSE, configured `.gitignore`, and pushed initial commit.
+- [x] **Publish to GitHub as a standalone repo** — Published to https://github.com/rohingosling/hex-grid-tessellator on 2026-02-18. Added MIT LICENSE, configured `.gitignore`, and pushed initial commit.
 
 - [ ] **Set up GitHub Releases for distributing `hextessellator.exe`** — After the repo is published, the `.exe` should be distributed as a release asset rather than committed in `dist/`. Steps:
   1. Install GitHub CLI: download from https://cli.github.com, then run `gh auth login`
