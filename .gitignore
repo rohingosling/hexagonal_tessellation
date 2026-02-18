@@ -1,6 +1,9 @@
 # Virtual environment
 venv/
 
+# Local backups
+backup/
+
 # PyInstaller build artifacts
 build/
 dist/

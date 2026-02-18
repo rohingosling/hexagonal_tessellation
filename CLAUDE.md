@@ -107,13 +107,7 @@ Rings enumerate from axial `(-d, 0)` walking `d` steps along each of 6 direction
 
 ## TODO
 
-- [ ] **Publish to GitHub as a standalone repo** — The `v3` folder is currently a subdirectory of the `common_python` repo. It needs its own repo on GitHub. Steps:
-  1. Create empty repo `hexagonal_tessellation` on GitHub (no README, no .gitignore, no license)
-  2. Create a `.gitignore` for this folder (exclude `venv/`, `dist/`, `__pycache__/`, `*.pyc`, `build/`, `*.spec`)
-  3. Initialise a fresh git repo in this folder: `git init`
-  4. Add the remote: `git remote add origin https://github.com/rohingosling/hexagonal_tessellation.git`
-  5. Stage and commit all tracked files: `git add .` then `git commit`
-  6. Push: `git push -u origin main`
+- [x] **Publish to GitHub as a standalone repo** — Published to https://github.com/rohingosling/hexagonal_tessellation on 2026-02-18. Added MIT LICENSE, configured `.gitignore`, and pushed initial commit.
 
 - [ ] **Set up GitHub Releases for distributing `main.exe`** — After the repo is published, the `.exe` should be distributed as a release asset rather than committed in `dist/`. Steps:
   1. Install GitHub CLI: download from https://cli.github.com, then run `gh auth login`
