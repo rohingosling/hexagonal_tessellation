@@ -6,6 +6,7 @@ I created `hextessellator.exe` to generate transparency masks that I use for gra
 
 ![Default](images/vision-board-wallpaper-4x.png)
 
+![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Pillow](https://img.shields.io/badge/Pillow-required-green)
 ![Tests](https://img.shields.io/badge/tests-71%20passed-brightgreen)
@@ -16,7 +17,7 @@ I created `hextessellator.exe` to generate transparency masks that I use for gra
 Download `hextessellator.exe` from `dist/` and run:
 
 ```bash
-# Generate with defaults (1024x768, high anti-aliasing)
+# Generate with default image (1024x768, high anti-aliasing)
 hextessellator.exe
 
 # Custom render
