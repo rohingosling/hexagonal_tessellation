@@ -4,7 +4,22 @@ A CLI tool that generates publication-quality hexagonal grid tessellation PNG im
 
 I created `hextessellator.exe` to generate transparency masks that I use for graphic design projects, like the one below.
 
-![Default](images/vision-board-wallpaper-4x.png)
+| Transparency Mask | |  Application |
+|:---:|:---:|:---:|
+| ![Default](images/vision-board-wallpaper-mask-400x250.png) | ► |![Default](images/vision-board-wallpaper-400x250.png) |
+
+As a worked example, the mask above can be created with `hextessellator.exe` using either one of two workflows.
+1. Command line arguments.
+2. Writing and importing a JSON settings file.
+
+I'l show both approaches below. You can use either approach, which ever feels more comfortable.
+
+**Command Line Workflow**
+1. Execute the following command in Windows **CMD** or **PowerShell**:<br>`hextessellator --width 1600 --height 1000 --circumradius 36 --margin 12 --line_width 0 --color_fill white --color_background black --antialias high --cull`<br><br>This will generate an image with the default file name, `tessellation.png`. You can use the `--file` argument to set your own file name.<br><br>![Default](images/worked-example-1.png)
+
+2. Use your preferred image manipulation program to manually remove the corner hexagons.<br>![Default](images/worked-example-2.png)<br>&emsp;&emsp;&emsp;▼<br>![Default](images/worked-example-3.png)
+
+
 
 ![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
