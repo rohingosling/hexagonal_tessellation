@@ -109,12 +109,6 @@ Rings enumerate from axial `(-d, 0)` walking `d` steps along each of 6 direction
 
 - [x] **Publish to GitHub as a standalone repo** — Published to https://github.com/rohingosling/hex-grid-tessellator on 2026-02-18. Added MIT LICENSE, configured `.gitignore`, and pushed initial commit.
 
-- [ ] **Set up GitHub Releases for distributing `hextessellator.exe`** — After the repo is published, the `.exe` should be distributed as a release asset rather than committed in `dist/`. Steps:
-  1. Install GitHub CLI: download from https://cli.github.com, then run `gh auth login`
-  2. Create a git tag: `git tag v3.1.0`
-  3. Push the tag: `git push origin v3.1.0`
-  4. Create the release with the binary attached: `gh release create v3.1.0 dist/hextessellator.exe --title "HEX Grid Tessellator v3.1.0" --notes "Release notes here"`
-  5. Update `README.md` download link to point to the GitHub Releases page instead of `dist/`
-  6. Add `dist/` to `.gitignore` and remove it from version control
+- [x] **Set up GitHub Releases for distributing `hextessellator.exe`** — Published as release asset at https://github.com/rohingosling/hex-grid-tessellator/releases/tag/v3.1.0 on 2026-02-18. README download link points to GitHub Releases. `dist/` excluded from version control via `.gitignore`.
 
 

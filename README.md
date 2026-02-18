@@ -74,7 +74,7 @@ I'l show both approaches below. You can use either approach, which ever feels mo
 
 ## Quick Start
 
-Download `hextessellator.exe` and run from the Windows Command Prompt:
+Download [`hextessellator.exe`](https://github.com/rohingosling/hex-grid-tessellator/releases/latest) and run from the Windows Command Prompt:
 
 ```cmd
 REM Generate with default image (1024x768, high anti-aliasing)
