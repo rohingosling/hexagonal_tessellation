@@ -1,5 +1,11 @@
 # HEX Grid Tessellator
 
+![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Pillow](https://img.shields.io/badge/Pillow-required-green)
+![Tests](https://img.shields.io/badge/tests-71%20passed-brightgreen)
+![Version](https://img.shields.io/badge/version-3.1.0-orange)
+
 A CLI tool that generates publication-quality hexagonal grid tessellation PNG images. Uses flat-top hexagons on an axial coordinate system with supersampled anti-aliasing. Runs as a standalone Windows `.exe` - no Python installation required.
 
 I created `hextessellator.exe` to generate transparency masks that I use for graphic design projects, like the one below.
@@ -14,18 +20,57 @@ As a worked example, the mask above can be created with `hextessellator.exe` usi
 
 I'l show both approaches below. You can use either approach, which ever feels more comfortable.
 
-**Command Line Workflow**
-1. Execute the following command in Windows **CMD** or **PowerShell**:<br>`hextessellator --width 1600 --height 1000 --circumradius 36 --margin 12 --line_width 0 --color_fill white --color_background black --antialias high --cull`<br><br>This will generate an image with the default file name, `tessellation.png`. You can use the `--file` argument to set your own file name.<br><br>![Default](images/worked-example-1.png)
+**Command Line Arguments Workflow**
 
-2. Use your preferred image manipulation program to manually remove the corner hexagons.<br>![Default](images/worked-example-2.png)<br>&emsp;&emsp;&emsp;▼<br>![Default](images/worked-example-3.png)
+1. Execute the following command in Windows **CMD** or **PowerShell**:
+
+   `hextessellator --width 1600 --height 1000 --circumradius 144 --margin 48 --line_width 0 --color_fill white --color_background black --antialias high --cull`
+   
+   This will generate an image with the default file name, `tessellation.png`.<br>You can use the `--file` argument to set your own file name.
+   
+   ![Default](images/worked-example-1.png)
+
+2. Use your preferred image manipulation program to manually remove the corner hexagons.
+
+   ![Default](images/worked-example-2.png)&emsp;![Default](images/worked-example-3.png)
 
 
+**JSON Settings File Workflow**
 
-![Windows](https://img.shields.io/badge/Platform-Windows-blue?logo=windows)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![Pillow](https://img.shields.io/badge/Pillow-required-green)
-![Tests](https://img.shields.io/badge/tests-71%20passed-brightgreen)
-![Version](https://img.shields.io/badge/version-3.1.0-orange)
+1. Write a JSON settings file, and place it in the same folder as `hextessellator.exe`.
+
+   ***Note:**<br>Not all the properties in the JSON file below will be used for this example, but I put all the fields in there for the sake of convenience anyway, so you can use the file as a general template.*
+
+   `settings-example.json`
+   ```json
+   {
+     "width":            1600,
+     "height":           1000,
+     "circumradius":     144.0,
+     "margin":           48.0,
+     "line_width":       0,
+     "layers":           0,
+     "color_fill":       "white",
+     "color_line":       "black",
+     "color_background": "black",
+     "antialias":        "high",
+     "file":             "tessellation.png",
+     "cull":             true,
+     "debug":            false
+   }
+   ```
+
+2. Execute the following command in Windows **CMD** or **PowerShell**:
+
+   `hextessellator --import_settings settings-example.json`
+
+   This will generate an image with the file name specified by the `file` field, `tessellation.png` in this case.
+
+   ![Default](images/worked-example-1.png)
+
+3. As in the case of the previous worked example, use your preferred image manipulation program to manually remove the corner hexagons.
+
+   ![Default](images/worked-example-2.png)&emsp;![Default](images/worked-example-3.png)
 
 ## Quick Start
 
@@ -44,6 +89,8 @@ hextessellator.exe --import_settings my_config.json
 ```
 
 ## Examples
+
+![Default](images/example-1.png) ![Dense](images/example-2.png) ![Culling](images/example-3.png) ![Contrast](images/example-4.png)
 
 ![Default](images/example-1.png) ![Dense](images/example-2.png) ![Culling](images/example-3.png) ![Contrast](images/example-4.png)
 
