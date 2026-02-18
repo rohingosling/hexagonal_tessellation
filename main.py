@@ -472,7 +472,7 @@ class Application:
     """
 
     VERSION:      str = _changelog_version("3.1.0")
-    BUILD_DATE:   str = "2026-02-09"
+    BUILD_DATE:   str = "2026-02-18"
     TITLE:        str = "HEX Grid Tessellator"
     AUTHOR:       str = "Rohin Gosling + Claude Code"
     BANNER_WIDTH: int = 60    

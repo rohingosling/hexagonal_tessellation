@@ -18,7 +18,7 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MAIN_PY = os.path.join(PROJECT_DIR, "main.py")
 CHANGELOG = os.path.join(PROJECT_DIR, "CHANGELOG.md")
 VENV_PYINSTALLER = os.path.join(PROJECT_DIR, "venv", "Scripts", "pyinstaller.exe")
-EXE_PATH = os.path.join(PROJECT_DIR, "dist", "main.exe")
+EXE_PATH = os.path.join(PROJECT_DIR, "dist", "hextessellator.exe")
 BANNER_WIDTH = 60
 
 sys.stdout.reconfigure(encoding="utf-8")
@@ -93,7 +93,7 @@ def step_stamp_build_date():
 def step_build_exe():
     """Build the .exe via PyInstaller. Returns (success: bool, summary: str)."""
     result = subprocess.run(
-        [VENV_PYINSTALLER, "--onefile", "main.py"],
+        [VENV_PYINSTALLER, "--onefile", "--name", "hextessellator", "main.py"],
         capture_output=True, text=True, cwd=PROJECT_DIR
     )
     if result.returncode == 0 and os.path.isfile(EXE_PATH):

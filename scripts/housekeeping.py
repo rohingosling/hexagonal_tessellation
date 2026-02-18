@@ -87,9 +87,9 @@ def step_validate_run_bat():
     with open(RUN_BAT, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Acceptable: contains venv path or dist\main.exe
+    # Acceptable: contains venv path or dist\hextessellator.exe
     uses_venv = "venv\\Scripts\\python.exe" in content or "venv/Scripts/python.exe" in content
-    uses_exe = "dist\\main.exe" in content or "dist/main.exe" in content
+    uses_exe = "dist\\hextessellator.exe" in content or "dist/hextessellator.exe" in content
 
     if uses_venv or uses_exe:
         return True, "run.bat uses venv/exe path"

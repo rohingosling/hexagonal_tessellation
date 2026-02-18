@@ -51,7 +51,7 @@ Run the full suite during development. Tests cover: class architecture/docstring
 pyinstaller --onefile main.py
 ```
 
-The standalone `.exe` is output to `dist/main.exe` and runs without a Python installation.
+The standalone `.exe` is output to `dist/hextessellator.exe` and runs without a Python installation.
 
 ## Rules
 
@@ -109,11 +109,11 @@ Rings enumerate from axial `(-d, 0)` walking `d` steps along each of 6 direction
 
 - [x] **Publish to GitHub as a standalone repo** — Published to https://github.com/rohingosling/hexagonal_tessellation on 2026-02-18. Added MIT LICENSE, configured `.gitignore`, and pushed initial commit.
 
-- [ ] **Set up GitHub Releases for distributing `main.exe`** — After the repo is published, the `.exe` should be distributed as a release asset rather than committed in `dist/`. Steps:
+- [ ] **Set up GitHub Releases for distributing `hextessellator.exe`** — After the repo is published, the `.exe` should be distributed as a release asset rather than committed in `dist/`. Steps:
   1. Install GitHub CLI: download from https://cli.github.com, then run `gh auth login`
   2. Create a git tag: `git tag v3.1.0`
   3. Push the tag: `git push origin v3.1.0`
-  4. Create the release with the binary attached: `gh release create v3.1.0 dist/main.exe --title "HEX Grid Tessellator v3.1.0" --notes "Release notes here"`
+  4. Create the release with the binary attached: `gh release create v3.1.0 dist/hextessellator.exe --title "HEX Grid Tessellator v3.1.0" --notes "Release notes here"`
   5. Update `README.md` download link to point to the GitHub Releases page instead of `dist/`
   6. Add `dist/` to `.gitignore` and remove it from version control
 

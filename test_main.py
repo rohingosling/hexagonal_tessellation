@@ -934,11 +934,11 @@ class TestSettingsRoundTrip(unittest.TestCase):
 # ===================================================================
 # 12. EXECUTABLE (.exe) TESTS
 # ===================================================================
-EXE_FILE = os.path.join(os.path.dirname(__file__), "dist", "main.exe")
+EXE_FILE = os.path.join(os.path.dirname(__file__), "dist", "hextessellator.exe")
 
 
 def _run_exe(*args, expect_fail=False):
-    """Run dist/main.exe with the given CLI args and return (returncode, stdout, stderr)."""
+    """Run dist/hextessellator.exe with the given CLI args and return (returncode, stdout, stderr)."""
     result = subprocess.run(
         [EXE_FILE, *args],
         capture_output=True, text=True, encoding="utf-8", timeout=120
@@ -951,9 +951,9 @@ def _run_exe(*args, expect_fail=False):
     return result.returncode, result.stdout, result.stderr
 
 
-@unittest.skipUnless(os.path.isfile(EXE_FILE), "dist/main.exe not found — build with pyinstaller first")
+@unittest.skipUnless(os.path.isfile(EXE_FILE), "dist/hextessellator.exe not found — build with pyinstaller first")
 class TestExecutable(unittest.TestCase):
-    """Smoke tests that run against the compiled dist/main.exe."""
+    """Smoke tests that run against the compiled dist/hextessellator.exe."""
 
     def test_exe_produces_png(self):
         """EXE must produce a valid PNG output file."""

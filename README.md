@@ -9,18 +9,18 @@ A CLI tool that generates publication-quality hexagonal grid tessellation PNG im
 
 ## Quick Start
 
-Download `main.exe` from `dist/` and run:
+Download `hextessellator.exe` from `dist/` and run:
 
 ```bash
 # Generate with defaults (1024x768, high anti-aliasing)
-main.exe
+hextessellator.exe
 
 # Custom render
-main.exe --width 1920 --height 1080 --circumradius 48 --antialias high --debug
+hextessellator.exe --width 1920 --height 1080 --circumradius 48 --antialias high --debug
 
 # Save/load settings
-main.exe --export_settings my_config.json
-main.exe --import_settings my_config.json
+hextessellator.exe --export_settings my_config.json
+hextessellator.exe --import_settings my_config.json
 ```
 
 ## Examples
@@ -28,13 +28,13 @@ main.exe --import_settings my_config.json
 | Default Settings | Dense Grid |
 |:---:|:---:|
 | ![Default](images/example-1.png) | ![Dense](images/example-2.png) |
-| `main.exe` | `main.exe --circumradius 32` |
+| `hextessellator.exe` | `hextessellator.exe --circumradius 32` |
 | Large hexagons (R=64), grey fill, black outlines, dark grey background. | Smaller circumradius produces a denser honeycomb pattern. |
 
 | Viewport Culling | High Contrast |
 |:---:|:---:|
 | ![Culling](images/example-3.png) | ![Contrast](images/example-4.png) |
-| `main.exe --circumradius 32 --cull` | `main.exe --circumradius 32 --color_fill white --color_background black --cull` |
+| `hextessellator.exe --circumradius 32 --cull` | `hextessellator.exe --circumradius 32 --color_fill white --color_background black --cull` |
 | Hexagons extending beyond the canvas edge are discarded, leaving the background visible at the periphery. | White fill on a black background, useful for making transparency masks. |
 
 ## CLI Reference
@@ -267,7 +267,7 @@ venv/Scripts/python.exe -m pytest test_main.py -v
 venv/Scripts/python.exe scripts/build.py
 ```
 
-This stamps the version and build date, compiles via PyInstaller, and smoke-tests the result. The executable is output to `dist/main.exe`.
+This stamps the version and build date, compiles via PyInstaller, and smoke-tests the result. The executable is output to `dist/hextessellator.exe`.
 
 ### Housekeeping
 
@@ -296,7 +296,7 @@ v3/
 |   +-- housekeeping.py      Definition-of-Done checks (8 steps)
 |   +-- changelog_table.py   Changelog summary table generator
 +-- .claude/skills/          Claude Code skill definitions
-+-- dist/main.exe            Standalone executable (built)
++-- dist/hextessellator.exe  Standalone executable (built)
 ```
 
 ## Versioning

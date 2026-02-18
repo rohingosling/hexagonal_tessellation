@@ -1,2 +1,2 @@
 cls
-dist\main.exe
+dist\hextessellator.exe
