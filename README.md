@@ -1,6 +1,10 @@
 # HEX Grid Tessellator
 
-A CLI tool that generates publication-quality hexagonal grid tessellation PNG images. Uses flat-top hexagons on an axial coordinate system with supersampled anti-aliasing. Runs as a standalone `.exe` — no Python installation required.
+A CLI tool that generates publication-quality hexagonal grid tessellation PNG images. Uses flat-top hexagons on an axial coordinate system with supersampled anti-aliasing. Runs as a standalone Windows `.exe` - no Python installation required.
+
+I created `hextessellator.exe` to generate transparency masks that I use for graphic design projects, like the one below.
+
+![Default](images/vision-board-wallpaper-4x.png)
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Pillow](https://img.shields.io/badge/Pillow-required-green)
@@ -25,17 +29,8 @@ hextessellator.exe --import_settings my_config.json
 
 ## Examples
 
-| Default Settings | Dense Grid |
-|:---:|:---:|
-| ![Default](images/example-1.png) | ![Dense](images/example-2.png) |
-| `hextessellator.exe` | `hextessellator.exe --circumradius 32` |
-| Large hexagons (R=64), grey fill, black outlines, dark grey background. | Smaller circumradius produces a denser honeycomb pattern. |
+![Default](images/example-1.png) ![Dense](images/example-2.png) ![Culling](images/example-3.png) ![Contrast](images/example-4.png)
 
-| Viewport Culling | High Contrast |
-|:---:|:---:|
-| ![Culling](images/example-3.png) | ![Contrast](images/example-4.png) |
-| `hextessellator.exe --circumradius 32 --cull` | `hextessellator.exe --circumradius 32 --color_fill white --color_background black --cull` |
-| Hexagons extending beyond the canvas edge are discarded, leaving the background visible at the periphery. | White fill on a black background, useful for making transparency masks. |
 
 ## CLI Reference
 
